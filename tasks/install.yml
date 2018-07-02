@@ -31,7 +31,7 @@
     - name: install|deb| add the apt repository
       become: true
       apt_repository:
-        repo: deb [arch=amd64] https://s3-us-west-2.amazonaws.com/brave-apt {{ansible_lsb.codename }} main
+        repo: deb [arch=amd64] https://s3-us-west-2.amazonaws.com/brave-apt {{ansible_distribution_release}} main
         state: present
   when: ansible_os_family == "Debian"
 
