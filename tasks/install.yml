@@ -1,0 +1,42 @@
+---
+# this will be installed via repo, so config repo and install
+
+- name: do these tasks for RedHat-y systems
+  block:
+    - name: install|rpm| add the repository
+      become: true
+      yum_repository:
+        name: brave-browser
+        description: Brave browser
+        baseurl: https://s3-us-west-2.amazonaws.com/brave-rpm-release/x86_64/
+        enabled: yes
+        gpgcheck: yes
+        gpgkey: https://s3-us-west-2.amazonaws.com/brave-rpm-release/keys.asc
+        skip_if_unavailable: yes
+  when: ansible_os_family == "RedHat"
+
+- name: do these tasks for Ubuntu systems
+  block:
+    - name: install|deb| install the https method driver for apt
+      become: true
+      apt:
+        name: apt-transport-https
+        state: present
+        update_cache: yes
+    - name: install|deb| add the apt key
+      become: true
+      apt_key:
+        url: https://s3-us-west-2.amazonaws.com/brave-apt-staging/keys.asc
+        state: present
+    - name: install|deb| add the apt repository
+      become: true
+      apt_repository:
+        repo: deb [arch=amd64] https://s3-us-west-2.amazonaws.com/brave-apt {{ansible_distribution_release}} main
+        state: present
+  when: ansible_os_family == "Debian"
+
+- name: install| install from repo
+  become: true
+  package:
+    name: brave
+    state: latest
