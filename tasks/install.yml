@@ -1,0 +1,18 @@
+---
+# this will be installed via repo, so config repo and install
+
+- name: do these tasks for RedHat-y systems
+  block:
+    - name: install|rpm| configure EPEL for RHEL and Cent
+      become: true
+      package:
+        name: epel-release
+        state: present
+  when: ansible_distribution == "RedHat" or
+        ansible_distribution == "CentOS"
+
+- name: install| install from repo
+  become: true
+  package:
+    name: hexchat
+    state: latest
