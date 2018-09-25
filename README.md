@@ -1,4 +1,4 @@
-Ansible Role: brave [![Build Status](https://travis-ci.com/dswhitley/ansible-role-brave.svg?branch=master)](https://travis-ci.com/dswhitley/ansible-role-brave)
+Ansible Role: brave [![Build Status](https://travis-ci.com/thisdwhitley/ansible-role-brave.svg?branch=master)](https://travis-ci.com/thisdwhitley/ansible-role-brave)
 ====================================
 
 This role will install the [Brave](https://brave.com/index/) browser.
